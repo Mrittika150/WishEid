@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Quicksand } from "next/font/google";
+import Header from "@/components/Header";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -15,8 +16,8 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
-  title: "Eid Card Studio",
-  description: "Create beautiful Eid cards with ease",
+  title: "WishEid",
+  description: "Create beautiful Eid cards and share the joy",
 };
 
 export default function RootLayout({
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfair.variable} ${quicksand.variable}`}>
+        <Header />
         {children}
       </body>
     </html>
