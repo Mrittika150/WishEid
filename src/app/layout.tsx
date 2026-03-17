@@ -1,33 +1,16 @@
-import type { Metadata } from "next";
-import { Playfair_Display, Quicksand } from "next/font/google";
-import Header from "@/components/Header";
-import "./globals.css";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  weight: ["400", "600"],
-});
-
-const quicksand = Quicksand({
-  subsets: ["latin"],
-  variable: "--font-quicksand",
-  weight: ["400", "500", "600"],
-});
+import type { Metadata } from 'next';
+import './globals.css';
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
-  title: "WishEid",
-  description: "Create beautiful Eid cards and share the joy",
+  title: 'WishEid — Eid Card Maker',
+  description: 'Create beautiful personalised Eid cards in minutes',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${quicksand.variable}`}>
+      <body>
         <Header />
         {children}
       </body>

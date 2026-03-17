@@ -1,156 +1,128 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useState } from "react";
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header style={styles.header}>
-      {/* Logo */}
-      <Link href="/" style={styles.logo}>
-        <span style={styles.logoMain}>Wish</span>
-        <span style={styles.logoAccent}>Eid</span>
-        <span style={styles.logoStar}> ✦</span>
-      </Link>
+    <header style={{
+      position: 'sticky',
+      top: 0,
+      zIndex: 100,
+      background: 'linear-gradient(135deg, rgba(245,201,154,0.88), rgba(212,160,80,0.80))',
+      backdropFilter: 'blur(12px)',
+      borderBottom: '1px solid rgba(255,255,255,0.5)',
+      padding: '0 2rem',
+    }}>
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        height: '64px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}>
 
-      {/* Desktop Nav */}
-      <nav style={styles.nav}>
-        <Link href="/" style={styles.navLink}>Home</Link>
-        <Link href="/gallery" style={styles.navLink}>Templates</Link>
-        <Link href="/editor" style={styles.navLink}>Editor</Link>
-      </nav>
+        {/* Logo */}
+        <Link href="/" style={{ textDecoration: 'none' }}>
+          <span style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: '1.4rem',
+            fontWeight: 700,
+            color: '#6b4a1e',
+            letterSpacing: '-0.01em',
+          }}>
+            WishEid ✦
+          </span>
+        </Link>
 
-      {/* CTA Button */}
-      <Link href="/editor" style={styles.ctaBtn}>
-        Create Card
-      </Link>
+        {/* Desktop nav */}
+        <nav
+          className="desktop-nav"
+          style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}
+        >
+          <Link href="/"        style={navLink}>Home</Link>
+          <Link href="/gallery" style={navLink}>Templates</Link>
+          <Link href="/editor"  style={navLink}>Editor</Link>
+          <Link href="/editor"  style={ctaButton}>Create Card</Link>
+        </nav>
 
-      {/* Mobile Hamburger */}
-      <button
-        style={styles.hamburger}
-        onClick={() => setMenuOpen(!menuOpen)}
-        aria-label="Toggle menu"
-      >
-        <span style={{ ...styles.bar, ...(menuOpen ? styles.barTopOpen : {}) }} />
-        <span style={{ ...styles.bar, ...(menuOpen ? styles.barMidOpen : {}) }} />
-        <span style={{ ...styles.bar, ...(menuOpen ? styles.barBotOpen : {}) }} />
-      </button>
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="mobile-menu-btn"
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            display: 'none',
+            flexDirection: 'column',
+            gap: '5px',
+            padding: '4px',
+          }}
+          aria-label="Toggle menu"
+        >
+          <span style={{ ...hamburgerLine, transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
+          <span style={{ ...hamburgerLine, opacity: menuOpen ? 0 : 1 }} />
+          <span style={{ ...hamburgerLine, transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
+        </button>
+      </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile dropdown */}
       {menuOpen && (
-        <div style={styles.mobileMenu}>
-          <Link href="/" style={styles.mobileLink} onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link href="/gallery" style={styles.mobileLink} onClick={() => setMenuOpen(false)}>Templates</Link>
-          <Link href="/editor" style={styles.mobileLink} onClick={() => setMenuOpen(false)}>Editor</Link>
-          <Link href="/editor" style={styles.mobileCta} onClick={() => setMenuOpen(false)}>Create Card</Link>
+        <div style={{
+          padding: '1rem 2rem 1.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          borderTop: '1px solid rgba(255,255,255,0.4)',
+        }}>
+          <Link href="/"        style={navLink} onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link href="/gallery" style={navLink} onClick={() => setMenuOpen(false)}>Templates</Link>
+          <Link href="/editor"  style={navLink} onClick={() => setMenuOpen(false)}>Editor</Link>
+          <Link href="/editor"  style={{ ...ctaButton, textAlign: 'center' }} onClick={() => setMenuOpen(false)}>
+            Create Card
+          </Link>
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .desktop-nav     { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+        }
+      `}</style>
     </header>
   );
 }
 
-const styles: Record<string, React.CSSProperties> = {
-  header: {
-    position: "sticky",
-    top: 0,
-    zIndex: 100,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "14px 32px",
-    background: "linear-gradient(135deg, #fde0c5 0%, #f5cdd8 50%, #ddd6f3 100%)",
-    borderBottom: "1px solid rgba(200,160,140,0.25)",
-    backdropFilter: "blur(8px)",
-  },
-  logo: {
-    textDecoration: "none",
-    fontFamily: "var(--font-playfair)",
-    fontSize: "1.5rem",
-    letterSpacing: "0.5px",
-  },
-  logoMain: { color: "#4a3728" },
-  logoAccent: { color: "#c4748a" },
-  logoStar: { color: "#b8a9e8", fontSize: "1rem" },
+const navLink: React.CSSProperties = {
+  textDecoration: 'none',
+  color: '#6b4a1e',
+  fontFamily: "'Quicksand', sans-serif",
+  fontWeight: 600,
+  fontSize: '0.95rem',
+};
 
-  nav: {
-    display: "flex",
-    gap: "28px",
-    alignItems: "center",
-  },
-  navLink: {
-    textDecoration: "none",
-    fontSize: "0.9rem",
-    fontWeight: 600,
-    color: "#7a6058",
-    fontFamily: "var(--font-quicksand)",
-    transition: "color 0.2s",
-  },
+const ctaButton: React.CSSProperties = {
+  textDecoration: 'none',
+  background: 'linear-gradient(135deg, #d4813a, #c9952a)',
+  color: '#fff',
+  fontFamily: "'Quicksand', sans-serif",
+  fontWeight: 700,
+  fontSize: '0.9rem',
+  padding: '0.5rem 1.25rem',
+  borderRadius: '999px',
+  boxShadow: '0 2px 12px rgba(201,149,42,0.35)',
+};
 
-  ctaBtn: {
-    textDecoration: "none",
-    padding: "9px 22px",
-    borderRadius: "20px",
-    background: "linear-gradient(135deg, #e8a0b4, #b8a9e8)",
-    color: "white",
-    fontSize: "0.85rem",
-    fontWeight: 700,
-    fontFamily: "var(--font-quicksand)",
-    letterSpacing: "0.3px",
-    transition: "opacity 0.2s",
-  },
-
-  hamburger: {
-    display: "none",
-    flexDirection: "column",
-    gap: "5px",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    padding: "4px",
-  },
-  bar: {
-    display: "block",
-    width: "22px",
-    height: "2px",
-    background: "#7a6058",
-    borderRadius: "2px",
-    transition: "all 0.25s",
-  },
-  barTopOpen: { transform: "translateY(7px) rotate(45deg)" },
-  barMidOpen: { opacity: 0 },
-  barBotOpen: { transform: "translateY(-7px) rotate(-45deg)" },
-
-  mobileMenu: {
-    position: "absolute",
-    top: "100%",
-    left: 0,
-    right: 0,
-    background: "#fef8f0",
-    borderBottom: "1px solid rgba(200,160,140,0.25)",
-    display: "flex",
-    flexDirection: "column",
-    padding: "12px 24px 20px",
-    gap: "14px",
-    zIndex: 99,
-  },
-  mobileLink: {
-    textDecoration: "none",
-    fontSize: "0.95rem",
-    fontWeight: 600,
-    color: "#7a6058",
-    fontFamily: "var(--font-quicksand)",
-  },
-  mobileCta: {
-    textDecoration: "none",
-    padding: "10px 0",
-    textAlign: "center",
-    borderRadius: "20px",
-    background: "linear-gradient(135deg, #e8a0b4, #b8a9e8)",
-    color: "white",
-    fontSize: "0.9rem",
-    fontWeight: 700,
-    fontFamily: "var(--font-quicksand)",
-  },
+const hamburgerLine: React.CSSProperties = {
+  display: 'block',
+  width: '22px',
+  height: '2px',
+  background: '#6b4a1e',
+  borderRadius: '2px',
+  transition: 'all 0.3s ease',
 };
